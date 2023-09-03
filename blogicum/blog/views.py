@@ -2,8 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from .models import Category, Post, User, Comment
 from django.utils import timezone
 from django.views.generic import (
-    CreateView, DeleteView, DetailView, ListView, UpdateView
-)
+    CreateView, DeleteView, DetailView, ListView, UpdateView)
 from django.urls import reverse
 from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -96,9 +95,9 @@ class PostDetailView(DetailView):
     def get_object(self, queryset=None):
         post = get_object_or_404(Post, pk=self.kwargs['pk'])
         if post.author != self.request.user and (post.is_published is False or
-                                                 post.category.is_published is
-                                                 False or post.pub_date >
-                                                 timezone.now()):
+                                                 post.category.is_published
+                                                 is False or post.pub_date
+                                                 > timezone.now()):
             raise Http404
         return post
 
