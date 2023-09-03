@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from .models import Category, Post, User, Comment
 from django.utils import timezone
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView, 
                                   UpdateView)
 from django.urls import reverse
 from .forms import CommentForm
