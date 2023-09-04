@@ -1,22 +1,23 @@
 from django.shortcuts import get_object_or_404, redirect
-from .models import Category, Post, User, Comment
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from django.urls import reverse
-from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.db.models import Count
-from .forms import UserForm
-OFFSET = 0
-LIMIT = 5
+
+from blog.forms import UserForm
+from blog.models import Category, Post, User, Comment
+from blog.forms import CommentForm
+
+PAGINATION = 10
 
 
 class ProfileListView(ListView):
     model = Post
     template_name = 'blog/profile.html'
-    paginate_by = 10
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         return (
@@ -112,7 +113,7 @@ class PostDetailView(DetailView):
 class IndexListView(ListView):
     model = Post
     template_name = 'blog/index.html'
-    paginate_by = 10
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         return Post.objects.select_related('author').filter(
@@ -124,7 +125,7 @@ class IndexListView(ListView):
 class CategoryPostView(ListView):
     model = Post
     template_name = 'blog/category.html'
-    paginate_by = 10
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         category = get_object_or_404(Category,
